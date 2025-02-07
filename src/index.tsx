@@ -1,10 +1,8 @@
-function component() {
-  const element = document.createElement("div");
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { Counter } from "./Counter";
 
-  // Lodash, currently included via a script, is required for this line to work
-  (element.innerHTML = "Hello"), "webpack";
-
-  return element;
-}
-
-document.body.appendChild(component());
+const root = ReactDOM.createRoot(
+  document.getElementById("root") as HTMLElement
+);
+root.render(<Counter />);
