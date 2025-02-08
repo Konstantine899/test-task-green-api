@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { LoginForm } from "./LoginForm/LoginForm";
-import { getSettings, logout } from "./api";
+import { getSettings, logout, sendMessage } from "./api";
+import ChatWindow, { IChatMessageItem } from "./ChatWindow/ChatWindow";
+import ChatInput from "./ChatInput/ChatInput";
 
 const App = () => {
+  const [messages, setMessages] = useState<IChatMessageItem[]>([]);
   const [idInstance, setIdInstance] = useState<string>(
     localStorage.getItem("idInstance") || ""
   );
@@ -49,7 +52,24 @@ const App = () => {
       localStorage.removeItem("apiTokenInstance");
       setIdInstance("");
       setIsLoggedIn(false);
+      setMessages([]);
       alert("Вы вышли из системы");
+    }
+  };
+
+  const handleSendMessage = async (message: string) => {
+    if (!isLoggedIn || !phoneNumber) {
+      alert(`Пожалуйста войдите и введите номер получателя`);
+      return;
+    }
+    try {
+      const newMessage: IChatMessageItem = { text: message, isMyMessage: true };
+      setMessages((prevMessages) => [...prevMessages, newMessage]);
+      await sendMessage(idInstance, apiTokenInstance, phoneNumber, message);
+      alert(`Сообщение отправлено!`);
+    } catch (error) {
+      console.log("Ошибка отправки сообщения", error);
+      alert("Ошибка отправки сообщения");
     }
   };
 
@@ -61,6 +81,8 @@ const App = () => {
         <>
           <h1>Чат WhatsApp</h1>
           <p>Вы общаетесь с номером: {phoneNumber}</p>
+          <ChatWindow messages={messages} />
+          <ChatInput onSendMessage={handleSendMessage} />
           {isLoading && <p>Загрузка...</p>}
           <button onClick={() => handleLogout(idInstance, apiTokenInstance)}>
             Выйти

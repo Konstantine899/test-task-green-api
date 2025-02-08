@@ -31,6 +31,10 @@ interface ILogoutResponse {
   isLogout: boolean;
 }
 
+interface ISendMessageResponse {
+  idMessage: string;
+}
+
 export const getSettings = async (
   idInstance: string,
   apiTokenInstance: string
@@ -55,6 +59,25 @@ export const logout = async (
     return response.data;
   } catch (error) {
     console.error("Ошибка при получении настроек:", error);
+    throw error;
+  }
+};
+
+export const sendMessage = async (
+  idInstance: string,
+  apiTokenInstance: string,
+  phoneNumber: string,
+  message: string
+): Promise<ISendMessageResponse> => {
+  try {
+    const url = `${__API_URL__}/waInstance${idInstance}/sendMessage/${apiTokenInstance}`;
+    const response = await axios.post<ISendMessageResponse>(url, {
+      chatId: `${phoneNumber}@.us`,
+      message,
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Ошибка при отправке сообщения:", error);
     throw error;
   }
 };
