@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { LoginForm } from "./LoginForm/LoginForm";
-import { getSettings } from "./api";
+import { getSettings, logout } from "./api";
 
 const App = () => {
   const [idInstance, setIdInstance] = useState<string>(
@@ -42,12 +42,15 @@ const App = () => {
     setIsLoggedIn(true);
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem("idInstance");
-    localStorage.removeItem("apiTokenInstance");
-    setIdInstance("");
-    setIsLoggedIn(false);
-    alert("Вы вышли из системы");
+  const handleLogout = async (idInstance: string, apiTokenInstance: string) => {
+    const isLogin = await logout(idInstance, apiTokenInstance);
+    if (isLogin) {
+      localStorage.removeItem("idInstance");
+      localStorage.removeItem("apiTokenInstance");
+      setIdInstance("");
+      setIsLoggedIn(false);
+      alert("Вы вышли из системы");
+    }
   };
 
   return (
@@ -59,7 +62,9 @@ const App = () => {
           <h1>Чат WhatsApp</h1>
           <p>Вы общаетесь с номером: {phoneNumber}</p>
           {isLoading && <p>Загрузка...</p>}
-          <button onClick={handleLogout}>Выйти</button>
+          <button onClick={() => handleLogout(idInstance, apiTokenInstance)}>
+            Выйти
+          </button>
         </>
       )}
     </div>
