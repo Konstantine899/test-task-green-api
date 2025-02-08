@@ -4,7 +4,7 @@ import { BuildOptions } from "./types/config";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 
 export function buildPlugins(options: BuildOptions): webpack.ProgressPlugin[] {
-  const { paths } = options;
+  const { paths, apiUrl, mediaUrl } = options;
   return [
     new webpack.ProgressPlugin(),
     new HTMLWebpackPlugin({
@@ -13,6 +13,10 @@ export function buildPlugins(options: BuildOptions): webpack.ProgressPlugin[] {
     new MiniCssExtractPlugin({
       filename: "css/[name].[contenthash:8].css",
       chunkFilename: "css/[name].[contenthash:8].css",
+    }),
+    new webpack.DefinePlugin({
+      __API_URL__: JSON.stringify(apiUrl),
+      __MEDIA_URL__: JSON.stringify(mediaUrl),
     }),
   ];
 }

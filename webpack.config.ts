@@ -13,12 +13,16 @@ export default (env: BuildEnv) => {
   const mode = env.mode || "development";
   const port = env.port || 3000;
   const isDev = mode === "development";
+  const apiUrl = "https://7105.api.greenapi.com";
+  const mediaUrl = "https://7105.media.greenapi.com";
 
   const config: webpack.Configuration = buildWebpackConfig({
     mode,
     paths,
     port,
     isDev,
+    apiUrl,
+    mediaUrl,
   });
 
   return config;
