@@ -5,3 +5,6 @@ declare module "*.scss" {
   const classNames: IClassNames;
   export = classNames;
 }
+
+declare const __API_URL__: string;
+declare const __MEDIA_URL__: string;

@@ -10,6 +10,8 @@ export interface BuildOptions {
   paths: BuildPath;
   port: number;
   isDev: boolean;
+  apiUrl: string;
+  mediaUrl: string;
 }
 
 export interface BuildEnv {
