@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
 interface ISettingsResponse {
   wid: string;
@@ -33,6 +33,37 @@ interface ILogoutResponse {
 
 interface ISendMessageResponse {
   idMessage: string;
+}
+
+interface IReceiveMessage {
+  receiptId: number;
+  body: {
+    typeWebhook: string;
+    instanceData: {
+      idInstance: number;
+      wid: string;
+      typeInstance: string;
+    };
+    timestamp: number;
+    idMessage: string;
+    senderData: {
+      chatId: string;
+      sender: string;
+      senderName: string;
+      senderContactName: string;
+    };
+    messageData: {
+      typeMessage: string;
+      textMessageData: {
+        textMessage: string;
+      };
+    };
+  };
+}
+
+interface IDeleteNotification {
+  result: boolean;
+  reason: string;
 }
 
 export const getSettings = async (
@@ -79,5 +110,41 @@ export const sendMessage = async (
   } catch (error) {
     console.error("Ошибка при отправке сообщения:", error);
     throw error;
+  }
+};
+
+export const receiveMessage = async (
+  idInstance: string,
+  apiTokenInstance: string
+): Promise<IReceiveMessage | null> => {
+  try {
+    const url = `${__API_URL__}/waInstance${idInstance}/receiveNotification/${apiTokenInstance}?receiveTimeout=5`;
+    const response = await axios.get<IReceiveMessage>(url);
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      const axiosError = error as AxiosError;
+      console.error(
+        "receiveMessage: Axios error details:",
+        axiosError.response?.data,
+        axiosError.response?.status
+      );
+    }
+    return null;
+  }
+};
+
+export const deleteNotification = async (
+  idInstance: string,
+  apiTokenInstance: string,
+  receiptId: number
+): Promise<IDeleteNotification> => {
+  try {
+    const url = `${__API_URL__}/waInstance${idInstance}/deleteNotification/${apiTokenInstance}/${receiptId}`;
+    const response = await axios.delete(url);
+    return response.data;
+  } catch (error: any) {
+    console.error("Ошибка удаления уведомления:", error);
+    return null;
   }
 };
