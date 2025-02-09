@@ -1,11 +1,12 @@
 import React, { useCallback, useState } from "react";
 
 interface IChatInput {
-  onSendMessage: (message: string) => void;
+  onSendMessage: (message: string, phoneNumber: string) => void;
+  getPhoneNumber: () => string;
 }
 
 const ChatInput = (props: IChatInput) => {
-  const { onSendMessage } = props;
+  const { onSendMessage, getPhoneNumber } = props;
   const [message, setMessage] = useState<string>("");
 
   const handleInputChange = useCallback(
@@ -17,20 +18,20 @@ const ChatInput = (props: IChatInput) => {
 
   const handleSendClick = useCallback(() => {
     if (message.trim() !== "") {
-      onSendMessage(message.trim());
+      onSendMessage(message.trim(), getPhoneNumber());
       setMessage("");
     }
-  }, [message, onSendMessage]);
+  }, [message, onSendMessage, getPhoneNumber]);
 
   const handleKeyDown = useCallback(
     (event: React.KeyboardEvent) => {
       if (event.key == "Enter" && !event.shiftKey && message.trim() !== "") {
         event.preventDefault(); // предотвращаю переход на новую строку
-        onSendMessage(message.trim());
+        onSendMessage(message.trim(), getPhoneNumber());
         setMessage("");
       }
     },
-    [message, onSendMessage]
+    [message, onSendMessage, getPhoneNumber]
   );
   return (
     <div className="chat-input">

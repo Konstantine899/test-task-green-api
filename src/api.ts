@@ -72,7 +72,7 @@ export const sendMessage = async (
   try {
     const url = `${__API_URL__}/waInstance${idInstance}/sendMessage/${apiTokenInstance}`;
     const response = await axios.post<ISendMessageResponse>(url, {
-      chatId: `${phoneNumber}@.us`,
+      chatId: `${phoneNumber}@c.us`,
       message,
     });
     return response.data;
