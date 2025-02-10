@@ -1,0 +1,12 @@
+@use "variables.scss";
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Более современный шрифт */
+  background-color: variables.$whatsapp-background;
+  margin: 0; /* Убираем отступы по умолчанию у body */
+  overflow: hidden; /* Предотвращаем прокрутку по body */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}

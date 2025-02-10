@@ -1,23 +1,7 @@
 import path from "path";
 import webpack from "webpack";
 import { buildWebpackConfig } from "./config/build/buildWebpackConfig";
-<<<<<<< HEAD
-import { BuildPath } from "./config/build/types/config";
-
-const paths: BuildPath = {
-  entry: path.resolve(__dirname, "src", "index.tsx"),
-  build: path.resolve(__dirname, "dist"),
-  html: path.resolve(__dirname, "public", "index.html"),
-};
-
-const config: webpack.Configuration = buildWebpackConfig({
-  mode: "development",
-  paths,
-});
-
-export default config;
-=======
-import { BuildEnv, BuildPath } from "./config/build/types/config";
+import { BuildEnv, BuildMode, BuildPath } from "./config/build/types/config";
 
 export default (env: BuildEnv) => {
   const paths: BuildPath = {
@@ -26,17 +10,24 @@ export default (env: BuildEnv) => {
     html: path.resolve(__dirname, "public", "index.html"),
   };
 
-  const mode = env.mode || "development";
-  const port = env.port || 3000;
-  const isDev = mode === "development";
+  const mode: BuildMode = env.mode || "development";
+  const port: number = env.port || 3000;
+  const isDev: boolean = mode === "development";
+  const apiUrl: string = "https://7105.api.greenapi.com";
+  const mediaUrl: string = "https://7105.media.greenapi.com";
+  const receivingIncomingMessageTimeout: number = 5000;
+  const receiveTimeout: number = 5;
 
   const config: webpack.Configuration = buildWebpackConfig({
     mode,
     paths,
     port,
     isDev,
+    apiUrl,
+    mediaUrl,
+    receivingIncomingMessageTimeout,
+    receiveTimeout,
   });
 
   return config;
 };
->>>>>>> develop

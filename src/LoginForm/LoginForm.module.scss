@@ -1,0 +1,89 @@
+@use "sass:color";
+@use "../variables";
+
+.login-form {
+  background-color: #fff; /* Белый фон */
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  width: 400px; /* Умеренная ширина */
+  max-width: 90%; /* Чтобы форма не была слишком широкой на маленьких экранах */
+  text-align: center;
+
+  h2 {
+    color: variables.$whatsapp-green; /* Зеленый цвет WhatsApp */
+    margin-bottom: 25px;
+    font-size: 24px;
+    font-weight: 500;
+  }
+
+  & > div { /* Стили для каждой строки с label и input */
+    margin-bottom: 20px;
+    text-align: left;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 8px;
+    color: variables.$text-color; /* Серый цвет WhatsApp */
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid variables.$input-border; /* Светлая граница */
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+
+    &:focus {
+      border-color: variables.$whatsapp-light-green; /* Подсветка при фокусе */
+      outline: none;
+    }
+  }
+
+  button {
+    background-color: variables.$whatsapp-light-green; /* Ярко-зеленый цвет WhatsApp */
+    color: white;
+    padding: 14px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    width: 100%;
+    font-weight: 500;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+    &:hover {
+      background-color: color.adjust(variables.$whatsapp-light-green, $lightness: -10%); /* Затемнение при наведении */
+      transform: translateY(-2px);
+    }
+
+    &:active {
+      transform: translateY(0);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    }
+
+    &:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+      box-shadow: none;
+      transform: translateY(0);
+    }
+  }
+}
+
+.error-message {
+  color: variables.$error-color; /* Красный цвет */
+  margin-bottom: 15px;
+  padding: 12px;
+  background-color: variables.$error-background; /* Светло-красный фон */
+  border: 1px solid variables.$error-border;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 14px;
+}
