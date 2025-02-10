@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { getSettings } from "../api";
+import * as styles from "./LoginForm.module.scss";
 
 interface LoginFromProps {
   onLogin: (idInstance: string, apiTokenInstance: string) => void;
@@ -10,24 +11,26 @@ export function LoginForm(props: LoginFromProps) {
   const [idInstance, setIdInstance] = useState<string>("");
   const [apiTokenInstance, setApiTokenInstance] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     if (idInstance.trim() === "" || apiTokenInstance.trim() === "") {
-      alert("Пожалуйста, введите idInstance и apiTokenInstance.");
+      setErrorMessage("Пожалуйста, введите idInstance и apiTokenInstance."); // Устанавливаем сообщение об ошибке
       return;
     }
+    setErrorMessage(null);
     setIsLoading(true); // Начинаем загрузку
     try {
       //  Вызываем API для проверки учетных данных
       await getSettings(idInstance, apiTokenInstance); //  Проверяем учетные данные
       localStorage.setItem("idInstance", idInstance);
       localStorage.setItem("apiTokenInstance", apiTokenInstance);
-      alert("Учетные данные сохранены!");
+      setErrorMessage("Учетные данные сохранены!");
       onLogin(idInstance, apiTokenInstance);
     } catch (error) {
       console.error("Ошибка проверки учетных данных:", error);
-      alert(
+      setErrorMessage(
         "Неверные учетные данные. Пожалуйста, проверьте idInstance и apiTokenInstance."
       );
     } finally {
@@ -36,8 +39,11 @@ export function LoginForm(props: LoginFromProps) {
   };
 
   return (
-    <form className="login-form" onSubmit={handleSubmit}>
+    <form className={styles["login-form"]} onSubmit={handleSubmit}>
       <h2>Введите учетные данные GREEN API</h2>
+      {errorMessage && (
+        <div className={styles["error-message"]}>{errorMessage}</div> // Отображаем сообщение об ошибке, если оно есть
+      )}
       <div>
         <label htmlFor="idInstance">idInstance:</label>
         <input
@@ -56,7 +62,9 @@ export function LoginForm(props: LoginFromProps) {
           onChange={(e) => setApiTokenInstance(e.target.value)}
         />
       </div>
-      <button type="submit">Войти</button>
+      <button type="submit" disabled={isLoading}>
+        {isLoading ? "Загрузка..." : "Войти"}
+      </button>
     </form>
   );
 }
