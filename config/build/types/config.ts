@@ -12,6 +12,7 @@ export interface BuildOptions {
   isDev: boolean;
   apiUrl: string;
   mediaUrl: string;
+  receivingIncomingMessage: number;
 }
 
 export interface BuildEnv {
