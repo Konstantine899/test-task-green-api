@@ -80,20 +80,6 @@ export const getSettings = async (
   }
 };
 
-export const logout = async (
-  idInstance: string,
-  apiTokenInstance: string
-): Promise<ILogoutResponse> => {
-  try {
-    const url = `${__API_URL__}/waInstance${idInstance}/logout/${apiTokenInstance}`;
-    const response = await axios.get(url);
-    return response.data;
-  } catch (error) {
-    console.error("Ошибка при получении настроек:", error);
-    throw error;
-  }
-};
-
 export const sendMessage = async (
   idInstance: string,
   apiTokenInstance: string,

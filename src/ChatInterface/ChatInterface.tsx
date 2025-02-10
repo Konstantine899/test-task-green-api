@@ -1,12 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import ChatWindow, { IChatMessageItem } from "../ChatWindow/ChatWindow";
 import ChatInput from "../ChatInput/ChatInput";
-import {
-  deleteNotification,
-  logout,
-  receiveMessage,
-  sendMessage,
-} from "../api";
+import { deleteNotification, receiveMessage, sendMessage } from "../api";
 import { useAuth } from "../ContextAPI/AuthContext";
 
 const ChatInterface = () => {
@@ -22,20 +17,14 @@ const ChatInterface = () => {
     isLoading,
   } = useAuth();
 
-  const handleLogout = useCallback(
-    async (idInstance: string, apiTokenInstance: string) => {
-      const isLogin = await logout(idInstance, apiTokenInstance);
-      if (isLogin) {
-        localStorage.removeItem("idInstance");
-        localStorage.removeItem("apiTokenInstance");
-        setIdInstance("");
-        setIsLoggedIn(false);
-        setMessages([]);
-        alert("Вы вышли из системы");
-      }
-    },
-    [idInstance, apiTokenInstance]
-  );
+  const handleLogout = useCallback(async () => {
+    localStorage.removeItem("idInstance");
+    localStorage.removeItem("apiTokenInstance");
+    setIdInstance("");
+    setIsLoggedIn(false);
+    setMessages([]);
+    alert("Вы вышли из системы");
+  }, []);
 
   const handleSendMessage = async (message: string, phoneNumber: string) => {
     if (!isLoggedIn || !phoneNumber) {
@@ -139,9 +128,7 @@ const ChatInterface = () => {
         getPhoneNumber={getPhoneNumber}
       />
       {isLoading && <p>Загрузка...</p>}
-      <button onClick={() => handleLogout(idInstance, apiTokenInstance)}>
-        Выйти
-      </button>
+      <button onClick={() => handleLogout()}>Выйти</button>
     </>
   );
 };
