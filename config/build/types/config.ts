@@ -12,7 +12,8 @@ export interface BuildOptions {
   isDev: boolean;
   apiUrl: string;
   mediaUrl: string;
-  receivingIncomingMessage: number;
+  receivingIncomingMessageTimeout: number;
+  receiveTimeout: number;
 }
 
 export interface BuildEnv {

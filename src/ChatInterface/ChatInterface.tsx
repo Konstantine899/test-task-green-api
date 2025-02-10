@@ -118,7 +118,10 @@ const ChatInterface = () => {
   useEffect(() => {
     let intervalId: NodeJS.Timeout | number | undefined;
     if (isLoggedIn) {
-      intervalId = setInterval(fetchNewMessages, 2000);
+      intervalId = setInterval(
+        fetchNewMessages,
+        RECEIVING_INCOMING_MESSAGE_TIMEOUT__
+      );
     }
     return () => {
       if (intervalId) {
