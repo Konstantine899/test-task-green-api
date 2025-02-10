@@ -8,7 +8,6 @@
   display: flex;
   flex-direction: column;
   height: 50vh;
-  outline: 1px solid red;
 
 }
 
@@ -57,7 +56,4 @@
 .incoming {
   background-color: variables.$whatsapp-message-incoming;
   align-self: flex-start; /* Сообщения слева */
-}
-.chat-messagemy-message{
-  outline: 1px solid red;
 }
