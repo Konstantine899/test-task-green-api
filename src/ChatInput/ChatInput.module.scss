@@ -1,0 +1,38 @@
+@use '../variables.scss';
+@use "sass:color";
+
+.chatInput {  /* <-- ТОЧНО убедись, что это ПЕРВЫЙ класс в файле, и что он написан правильно */
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  background-color: #f0f0f0;
+  border-top: 1px solid #ddd;
+  outline: 1px solid green;
+
+  textarea {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid variables.$input-border;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-right: 10px;
+    resize: none;
+    overflow: auto;
+    min-height: 40px;
+  }
+
+  button {
+    background-color: variables.$whatsapp-light-green;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: color.adjust(variables.$whatsapp-light-green, $lightness: -10%);
+    }
+  }
+}

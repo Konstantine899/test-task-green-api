@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import ChatMessage from "../ChatMessage/ChatMessage";
+import * as styles from "./ChatWindow.module.scss";
 
 export interface IChatMessageItem {
   text: string;
@@ -29,8 +30,8 @@ const ChatWindow = (props: ChatWindowProps) => {
   };
 
   return (
-    <div>
-      <div>
+    <div className={styles["chatWindow"]}>
+      <div className={styles["recipientInput"]}>
         <label htmlFor="recipient">Номер телефона получателя:</label>
         <input
           type="text"
@@ -38,7 +39,7 @@ const ChatWindow = (props: ChatWindowProps) => {
           onChange={handlePhoneNumberChange}
         />
       </div>
-      <div className="chat-window" ref={chatWindowRef}>
+      <div className={styles["messageList"]} ref={chatWindowRef}>
         {messages.map((message, index) => (
           <ChatMessage
             key={index}
