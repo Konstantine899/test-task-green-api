@@ -15,7 +15,8 @@ export default (env: BuildEnv) => {
   const isDev: boolean = mode === "development";
   const apiUrl: string = "https://7105.api.greenapi.com";
   const mediaUrl: string = "https://7105.media.greenapi.com";
-  const receivingIncomingMessage: number = 5000;
+  const receivingIncomingMessageTimeout: number = 5000;
+  const receiveTimeout: number = 5;
 
   const config: webpack.Configuration = buildWebpackConfig({
     mode,
@@ -24,7 +25,8 @@ export default (env: BuildEnv) => {
     isDev,
     apiUrl,
     mediaUrl,
-    receivingIncomingMessage,
+    receivingIncomingMessageTimeout,
+    receiveTimeout,
   });
 
   return config;
