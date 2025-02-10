@@ -118,7 +118,7 @@ export const receiveMessage = async (
   apiTokenInstance: string
 ): Promise<IReceiveMessage | null> => {
   try {
-    const url = `${__API_URL__}/waInstance${idInstance}/receiveNotification/${apiTokenInstance}?receiveTimeout=5`;
+    const url = `${__API_URL__}/waInstance${idInstance}/receiveNotification/${apiTokenInstance}?receiveTimeout=${RECEIVE_TIMEOUT}`;
     const response = await axios.get<IReceiveMessage>(url);
     return response.data;
   } catch (error) {
