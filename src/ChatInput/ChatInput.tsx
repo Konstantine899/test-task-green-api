@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from "react";
+import * as styles from "./ChatInput.module.scss";
 
 interface IChatInput {
   onSendMessage: (message: string, phoneNumber: string) => void;
@@ -34,7 +35,7 @@ const ChatInput = (props: IChatInput) => {
     [message, onSendMessage, getPhoneNumber]
   );
   return (
-    <div className="chat-input">
+    <div className={styles["chatInput"]}>
       <textarea
         placeholder={"Введите сообщение..."}
         value={message}

@@ -3,6 +3,7 @@ import ChatWindow, { IChatMessageItem } from "../ChatWindow/ChatWindow";
 import ChatInput from "../ChatInput/ChatInput";
 import { deleteNotification, receiveMessage, sendMessage } from "../api";
 import { useAuth } from "../ContextAPI/AuthContext";
+import * as styles from "./ChatInterface.module.scss";
 
 const ChatInterface = () => {
   const [messages, setMessages] = useState<IChatMessageItem[]>([]);
@@ -120,16 +121,18 @@ const ChatInterface = () => {
   }, [isLoggedIn, fetchNewMessages]);
 
   return (
-    <>
-      <h1>Чат WhatsApp</h1>
+    <div className={styles["chatContainer"]}>
+      <h1 className={styles["chatTitle"]}>Чат WhatsApp</h1>
       <ChatWindow messages={messages} setPhoneNumber={setPhoneNumber} />
       <ChatInput
         onSendMessage={handleSendMessage}
         getPhoneNumber={getPhoneNumber}
       />
-      {isLoading && <p>Загрузка...</p>}
-      <button onClick={() => handleLogout()}>Выйти</button>
-    </>
+      {isLoading && <p className={styles["loading"]}>Загрузка...</p>}
+      <button className={styles["logoutButton"]} onClick={() => handleLogout()}>
+        Выйти
+      </button>
+    </div>
   );
 };
 

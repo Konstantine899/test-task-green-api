@@ -1,0 +1,42 @@
+@use "sass:color";
+@use "../variables";
+
+.chatContainer {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* Занимает всю высоту экрана */
+  width: 70vw;
+  background-color: variables.$whatsapp-background;
+  font-family: sans-serif; /* Шрифт */
+}
+
+.chatTitle {
+  text-align: center;
+  padding: 20px;
+  background-color: variables.$whatsapp-green;
+  color: white;
+  margin: 0;
+}
+
+.loading {
+  text-align: center;
+  margin-top: 10px;
+  color: variables.$text-color;
+}
+
+.logoutButton {
+  background-color: #f44336; /* Красный цвет для кнопки "Выйти" */
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 20px;
+  align-self: center; /* Центрируем кнопку по горизонтали */
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: color.adjust(#f44336, $lightness: -10%);;
+  }
+}
